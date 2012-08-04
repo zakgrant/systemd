@@ -1,5 +1,5 @@
 [Unit]
-Description=Execute the /etc/rc.local file at boot.
+Description=Run rc.local
 
 [Service]
 ExecStart=/etc/rc.local
