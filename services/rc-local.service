@@ -1,0 +1,9 @@
+[Unit]
+Description=Execute the /etc/rc.local file at boot.
+
+[Service]
+ExecStart=/etc/rc.local
+Type=oneshot
+
+[Install]
+WantedBy=multi-user.target
