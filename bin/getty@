@@ -12,9 +12,24 @@ function show_help()
     echo "USAGE: getty@ <action> <getty1> <getty2> ... <getty2>"
     echo
     echo "Actions:"
+    echo "    list      - list the currently enabled gettys (takes no arguments)"
     echo "    enable    - cause a getty to be started (with no autologin)"
     echo "    disable   - stop a getty from being started"
     echo "    autologin - toggle auto-login status for an enabled getty"
+}
+
+function show_gettys()
+{
+    pushd $GETTYDIR
+    for file in *; do
+        tty=`echo $file | sed -e 's:.*@\(.*\)\.service:\1:'`
+        if grep -q autologin $file; then
+            echo "$tty [AUTO]"
+        else
+            echo $tty
+        fi
+    done
+    popd
 }
 
 function enable_getty()
@@ -51,6 +66,11 @@ action=$1
 if [[ $action == "" ]]; then
     show_help
     exit 1
+fi
+
+if [[ $action == "list" ]]; then
+    show_gettys
+    exit 0
 fi
 
 while [[ $2 != "" ]]; do
