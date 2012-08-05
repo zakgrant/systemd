@@ -17,18 +17,11 @@ function show_help()
     echo "    autologin - toggle auto-login status for an enabled getty"
 }
 
-function getty_exists()
-{
-    getty=$1
-
-    [[ -e $GETTYDIR/getty@$getty.service ]] || [[ -e $GETTYDIR/autologin@$getty.service ]]
-}
-
 function enable_getty()
 {
     getty=$1
     
-    if ! getty_exists $getty; then
+    if [[ ! -e $GETTYDIR/getty@$getty.service ]] && [[ ! -e $GETTYDIR/autologin@$getty.service ]]; then
         ln -s $GETTYSERVICE $GETTYDIR/getty@$getty.service
     fi
 }
@@ -44,14 +37,12 @@ function autologin_getty()
 {
     getty=$1
 
-    if getty_exists $getty; then
-        if [[ -e $GETTYDIR/getty@$getty.service ]]; then
-            rm $GETTYDIR/getty@$getty.service
-            ln -s $AUTOSERVICE $GETTYDIR/autologin@$getty.service
-        else
-            rm $GETTYDIR/autologin@$getty.service
-            ln -s $GETTYSERVICE $GETTYDIR/getty@$getty.service
-        fi
+    if [[ -e $GETTYDIR/getty@$getty.service ]]; then
+        rm $GETTYDIR/getty@$getty.service
+        ln -s $AUTOSERVICE $GETTYDIR/autologin@$getty.service
+    elif [[ -e $GETTYDIR/autologin@$getty.service ]]; then
+        rm $GETTYDIR/autologin@$getty.service
+        ln -s $GETTYSERVICE $GETTYDIR/getty@$getty.service
     fi
 }
 
