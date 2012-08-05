@@ -53,23 +53,23 @@ if [[ $action == "" ]]; then
     exit 1
 fi
 
-shift
+while [[ $2 != "" ]]; do
+    getty=$2
+    shift
 
-while [[ $1 != "" ]]; do
     case $action in
         "enable")
-            enable_getty $1
+            enable_getty $getty
             ;;   
         "disable")
-            disable_getty $1
+            disable_getty $getty
             ;;
         "autologin")
-            autologin_getty $1
+            autologin_getty $getty
             ;;
         *)
             show_help
             exit 1
             ;;
     esac
-    shift
 done
