@@ -1,0 +1,12 @@
+[Unit]
+Description=Minecraft server %I
+After=network.target
+
+[Service]
+Type=forking
+WorkingDirectory=%h
+ExecStart=/usr/local/bin/gameserver minecraft start %I
+ExecStop=/usr/local/bin/gameserver minecraft stop %I
+
+[Install]
+WantedBy=multi-user.target
