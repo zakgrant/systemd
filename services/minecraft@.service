@@ -7,7 +7,7 @@ Type=forking
 User=minecraft
 WorkingDirectory=%h
 ExecStart=/usr/bin/tmux new-session -d -s %I "cd /srv/minecraft/%I ; /opt/java/jre/bin/java -Xmx4G -Xincgc -jar /srv/minecraft/craftbukkit.jar"
-ExecStop=/usr/bin/tmux kill-session -t %I
+ExecStop=/usr/bin/tmux send-keys -l -t %I "stop"
 
 [Install]
 WantedBy=multi-user.target
