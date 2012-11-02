@@ -4,9 +4,10 @@ After=network.target
 
 [Service]
 Type=forking
+User=minecraft
 WorkingDirectory=%h
-ExecStart=/usr/local/bin/gameserver minecraft start %I
-ExecStop=/usr/local/bin/gameserver minecraft stop %I
+ExecStart=/usr/bin/tmux new-session -d -s %I "cd /srv/minecraft/%I ; /opt/java/jre/bin/java -Xmx4G -Xincgc -jar /srv/minecraft/craftbukkit.jar"
+ExecStop=/usr/bin/tmux kill-session -t %I
 
 [Install]
 WantedBy=multi-user.target
