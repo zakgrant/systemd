@@ -1,0 +1,12 @@
+# Path to the Java binary
+java = /opt/java/jre/bin/java
+
+# Maximum memory for an individual minecraft server
+maxmem = 4G
+
+# Directory for Minecraft servers
+# Servers live in ${worlddir}/${servername}
+worlddir = /srv/minecraft
+
+# Jar to run as the server
+serverjar = /srv/minecraft/craftbukkit.jar

@@ -4,9 +4,10 @@ After=network.target
 
 [Service]
 Type=forking
+EnvironmentFile=/etc/conf.d/minecraft
 User=minecraft
 WorkingDirectory=%h
-ExecStart=/usr/bin/tmux new-session -d -s %I "cd /srv/minecraft/%I ; /opt/java/jre/bin/java -Xmx4G -Xincgc -jar /srv/minecraft/craftbukkit.jar"
+ExecStart=/usr/bin/tmux new-session -d -s %I "cd ${worlddir}/%I ; ${java} -Xmx${maxmem} -Xincgc -jar ${serverjar}"
 ExecStop=/usr/bin/tmux send-keys -l -t %I "stop"
 
 [Install]
