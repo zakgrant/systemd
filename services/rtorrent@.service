@@ -1,0 +1,14 @@
+[Unit]
+Description=rTorrent on %I
+After=network.target
+
+[Service]
+Type=forking
+User=torrents
+WorkingDirectory=%h/%I
+ExecStart=/usr/bin/tmux new-session -d -s %I /usr/bin/rtorrent
+ExecStop=/usr/bin/tmux send-keys -t %I C-q
+StandardOutput=journal
+
+[Install]
+WantedBy=multi-user.target
